@@ -1,6 +1,29 @@
+html {
+  font-size: 62.5%;
+}
+
+h1 {
+  font-size: 3.2rem;
+}
+
+h2 {
+  font-size: 2.4rem;
+}
+
+h3 {
+  font-size: 1.872rem;
+}
+
+p {
+  font-size: 1.6rem;
+}
+
+a {
+  font-size: 1.6rem;
+}
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  font-family: 'Roboto',-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -10,4 +33,32 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.fadeIn1-appear {
+  opacity: 0;
+}
+
+.fadeIn1-appear.fadeIn1-appear-active {
+  opacity: 1;
+  transition: opacity 1000ms linear;
+}
+
+/* .fadeIn-leave {
+  opacity: 1;
+}
+
+.fadeIn-leave.fadeIn-leave-active {
+  opacity: 0;
+  transition: opacity 1000ms linear;
+} */
+
+.fadeIn2-appear {
+  opacity: 0;
+
+}
+
+.fadeIn2-appear.fadeIn2-appear-active {
+  opacity: 1;
+  transition: opacity 1000ms linear 500ms;
 }
