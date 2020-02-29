@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { withFormik, Form, Field } from 'formik';
-
+import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 import axios from "axios";
 import * as yup from 'yup';
 import styled from 'styled-components';
@@ -15,6 +15,9 @@ const testInfo = {
 const Container = styled.div`
 
     form {
+        @media (min-width: 1000px) {
+            width: 500px;
+        }
         label {
             display: flex;
             flex-direction: column;
@@ -51,9 +54,24 @@ const Container = styled.div`
             @media (min-width: 800px) {
                 width: 30rem;
             }
+            @media (min-width: 1000px) {
+                width: 18rem;
+            }
         }
     }
 `
+const Trans = ReactCSSTransitionGroup;
+
+const slideIn = () => {
+    return {
+        transitionName: `slideIn`,
+        transitionEnterTimeout: 0,
+        transitionAppear: true,
+        transitionAppearTimeout: 0,
+        transitionLeave: true,
+        transitionLeaveTimeout: 500
+    }
+}
 
 
 const UserForm = (props) => {
@@ -78,41 +96,66 @@ const UserForm = (props) => {
             }
         }
     }, [props.isSubmitting, props.status])
+    if (props.login) {
+        return (
+            <Container>
+                {error && <h2>{error}</h2>}
 
-    return (
-        <Container>
-            {error && <h2>{error}</h2>}
-
-            <Form>
-                <label>
-                    First Name
-                    <Field type="text" name="firstName" />
-                </label>
-                <label>
-                    Last Name
-                    <Field type="text" name="lastName" />
-                </label>
-                <label>
-                    Phone Number
-                    <Field 
-                    type="tel" 
-                    name="phoneNumber"
-                    pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
-                    placeholder="xxx-xxx-xxxx"
-                    />
-                </label>
-                <label>
-                    Username
-                    <Field type="text" name="username" />
-                </label>
-                <label>
-                    Password
-                    <Field type="password" name="password" />
-                </label>
-                <button type="submit">Sign In</button>
-            </Form>
-        </Container>
-    )
+                <Form>
+                    <label>
+                        Username
+                        <Field type="text" name="username" />
+                    </label>
+                    <label>
+                        Password
+                        <Field type="password" name="password" />
+                    </label>
+                    <Trans {...slideIn(0)}>
+                        <button type="submit">Log in</button>
+                        <p>Forgot your username/password?</p>
+                    </Trans>
+                </Form>
+            </Container>
+        )
+    } else {
+        return (
+            <Container>
+                {error && <h2>{error}</h2>}
+    
+                <Form>
+                    <label>
+                        First Name
+                        <Field type="text" name="firstName" />
+                    </label>
+                    <label>
+                        Last Name
+                        <Field type="text" name="lastName" />
+                    </label>
+                    <label>
+                        Phone Number
+                        <Field 
+                        type="tel" 
+                        name="phoneNumber"
+                        pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+                        placeholder="xxx-xxx-xxxx"
+                        />
+                    </label>
+                    <label>
+                        Username
+                        <Field type="text" name="username" />
+                    </label>
+                    <label>
+                        Password
+                        <Field type="password" name="password" />
+                    </label>
+                    <Trans {...slideIn(0)}>
+                        <button type="submit">Sign In</button>
+                    </Trans>
+                </Form>
+            </Container>
+        )
+    }
+    
 }
 
 export default withFormik({

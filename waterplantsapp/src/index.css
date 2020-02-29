@@ -62,3 +62,24 @@ code {
   opacity: 1;
   transition: opacity 1000ms linear 500ms;
 }
+
+.fadeIn3-appear {
+  opacity: 0;
+
+}
+
+.fadeIn3-appear.fadeIn3-appear-active {
+  opacity: 1;
+  transition: opacity 1000ms linear 1000ms;
+}
+
+.slideIn-appear {
+  transform: translateY(20rem);
+  opacity: 0;
+}
+
+.slideIn-appear.slideIn-appear-active {
+  transform: translateY(0);
+  opacity: 1;
+  transition: all 1200ms ease-out 1000ms;
+}

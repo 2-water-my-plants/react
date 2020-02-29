@@ -6,11 +6,23 @@ import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 import UserForm from "../components/UserForm";
 
 const Container = styled.div`
+    height: 100vh;
+    @media (min-width: 1000px) {
+        display: flex;
+        width: 1000px;
+        margin: 0 auto;
+    }
+`
+
+const FormContainer = styled.div`
     display: flex;
     flex-direction: column;
     @media (min-width: 800px) {
-        width: 800px;
+        width: 70%;
         margin: 0 auto;
+    }
+    @media (min-width: 1000px) {
+        width:60%;
     }
     h1 {
         width: 80%;
@@ -29,6 +41,15 @@ const Container = styled.div`
         }
     }
 `
+
+const PlantImg = styled.img`
+    display: none;
+    width: 50rem;
+    @media (min-width: 1000px) {
+        display: inline-block;
+    }
+`
+
 const Trans = ReactCSSTransitionGroup;
 
 const fadeIn = (n, timeoutLength) => {
@@ -46,13 +67,18 @@ const fadeIn = (n, timeoutLength) => {
 const Login = () => {
     return (
         <Container>
-            <Trans {...fadeIn(1, 1000)} >
-                <h1>Login in to your Account</h1>
-            </Trans>
-            <Trans {...fadeIn(2, 1500)} >
-            <p>Don't have an account? <Link to="/signup">Create account</Link></p>
-            </Trans>
-            <UserForm />
+            <FormContainer>
+                <Trans {...fadeIn(1, 1000)} >
+                    <h1>Login in to your Account</h1>
+                </Trans>
+                <Trans {...fadeIn(2, 1500)} >
+                    <p>Don't have an account? <Link to="/signup">Create account</Link></p>
+                </Trans>
+                <Trans {...fadeIn(3, 2000)} >
+                    <UserForm login />
+                </Trans>
+            </FormContainer>
+            <PlantImg src={require('../images/desktop-bg.png')} />
         </Container>
     )
 }
