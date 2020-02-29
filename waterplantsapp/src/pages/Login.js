@@ -45,6 +45,7 @@ const FormContainer = styled.div`
 const PlantImg = styled.img`
     display: none;
     width: 50rem;
+    height: 70rem;
     @media (min-width: 1000px) {
         display: inline-block;
     }
