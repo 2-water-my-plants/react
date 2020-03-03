@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 
-import UserForm from "../components/UserForm";
+import SignupForm from '../components/SignupForm';
 
 const Container = styled.div`
     @media (min-width: 1000px) {
@@ -62,6 +62,14 @@ const fadeIn = (n) => {
     }
 }
 
+const dummyData = {
+    firstName: "tom",
+    lastName: "nguyen",
+    username: "tom27",
+    phoneNumber: "123-123-1234",
+    password: "Crappypw@123",
+}
+
 const Signup = () => {
     return (
         <Container>
@@ -73,7 +81,7 @@ const Signup = () => {
                     <p>Already have an account? <Link to="/login">Log in</Link></p>
                 </Trans>
                 <Trans {...fadeIn(3)} >
-                    <UserForm />
+                    <SignupForm {...dummyData} />
                 </Trans>
             </FormContainer>
             <PlantImg src={require('../images/desktop-bg.png')} />
