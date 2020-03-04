@@ -1,20 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { withFormik, Form, Field } from 'formik';
-
+import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 import axios from "axios";
 import * as yup from 'yup';
 import styled from 'styled-components';
 
-
-const testInfo = {
-    name: "thomas",
-    email: "thomas@domain.com",
-    password: "Bestpassword%123",
-}
-
 const Container = styled.div`
 
     form {
+        @media (min-width: 1000px) {
+            width: 500px;
+        }
         label {
             display: flex;
             flex-direction: column;
@@ -51,18 +47,30 @@ const Container = styled.div`
             @media (min-width: 800px) {
                 width: 30rem;
             }
+            @media (min-width: 1000px) {
+                width: 18rem;
+            }
         }
     }
 `
+const Trans = ReactCSSTransitionGroup;
+
+const slideIn = () => {
+    return {
+        transitionName: `slideIn`,
+        transitionEnterTimeout: 0,
+        transitionAppear: true,
+        transitionAppearTimeout: 0,
+        transitionLeave: true,
+        transitionLeaveTimeout: 500
+    }
+}
 
 
-const UserForm = (props) => {
+const LoginForm = (props) => {
 
     const [error, setError] = useState()
-    const [users, setUsers] = useState([testInfo])
-
-    console.log(props.values)
-
+    const [users, setUsers] = useState()
     useEffect(() => {
         if (!props.isValid) {
             const validationError = props.errors[Object.keys(props.errors)[0]];
@@ -70,12 +78,13 @@ const UserForm = (props) => {
         }
 
         if (props.status) {
-            if (users.find((user) => user.email === props.status.email)) {
-                setError(`Email ${props.status.email} is already taken`)
+            if (props.status.errno) {
+
             } else {
-                setUsers([...users, props.status])
+                setUsers(props.status)
                 setError(undefined)
             }
+
         }
     }, [props.isSubmitting, props.status])
 
@@ -85,23 +94,6 @@ const UserForm = (props) => {
 
             <Form>
                 <label>
-                    First Name
-                    <Field type="text" name="firstName" />
-                </label>
-                <label>
-                    Last Name
-                    <Field type="text" name="lastName" />
-                </label>
-                <label>
-                    Phone Number
-                    <Field 
-                    type="tel" 
-                    name="phoneNumber"
-                    pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
-                    placeholder="xxx-xxx-xxxx"
-                    />
-                </label>
-                <label>
                     Username
                     <Field type="text" name="username" />
                 </label>
@@ -109,37 +101,38 @@ const UserForm = (props) => {
                     Password
                     <Field type="password" name="password" />
                 </label>
-                <button type="submit">Sign In</button>
+                <Trans {...slideIn(0)}>
+                    <button type="submit">Log in</button>
+                    <p>Forgot your username/password?</p>
+                </Trans>
             </Form>
         </Container>
     )
+    
 }
 
 export default withFormik({
-    mapPropsToValues: ({ name, email, phoneNumber, username, password }) => {
+    mapPropsToValues: ({ username, password}) => {
         return {
-            name: name || "",
-            email: email || "",
-            phoneNumber: phoneNumber || "",
             username: username || "",
             password: password || ""
         }
     },
     validationSchema: yup.object().shape({
-        name: yup.string().required("Please enter your name"),
-        email: yup.string().required("Please enter your email").email("Please enter an appropriate email"),
-        phoneNumber: yup.string().required("Please enter your phone number").min(12).max(12),
         username: yup.string().required("Please enter your username"),
         password: yup.string().required("Please enter a password").matches(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/, { message: "Password needs a minimum eight characters, at least one letter, one number and one special character " })
     }),
     handleSubmit: (values, { setStatus, resetForm }) => {
-        // axios
-        //     .post("", values)
-        //     .then(response => {
-        //         setStatus(response.data)
-        //         resetForm()
-        //     })
-        //     .catch(err => console.log(err.response))
-        setStatus(values)
+        axios
+            .post("https://water-myplants-2.herokuapp.com/api/auth/login", values)
+            .then(response => {
+                console.log(response.data)
+                setStatus(response.data)
+                resetForm()
+            })
+            .catch(err => {
+                setStatus(err.response.data)
+                console.log(err.response)
+            })
     }
-})(UserForm);
+})(LoginForm);

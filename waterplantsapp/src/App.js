@@ -7,15 +7,22 @@ import Signup from "./pages/Signup";
 import Header from "./components/Header";
 
 const Container = styled.div`
-  width: 100%;
+    background-image: url(${require("./images/mobile-bg.jpg")});
+    background-size: cover;
+    background-position: center;
+    height: 100%;
+
+    @media (min-width: 800px) {
+      background: none;
+    }
 `
 function App() {
   return (
-    <div>
+    <Container>
       <Header />
       <Route path="/login" component={Login} />
       <Route path="/signup" component={Signup} />
-    </div>
+    </Container>
   );
 }
 
