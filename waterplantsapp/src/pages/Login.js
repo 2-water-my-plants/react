@@ -65,10 +65,6 @@ const fadeIn = (n, timeoutLength) => {
     }
 }
 
-const dummyData = {
-    username: "tom27",
-    password: "Crappypw@123",
-}
 
 
 const Login = () => {
@@ -82,7 +78,7 @@ const Login = () => {
                     <p>Don't have an account? <Link to="/signup">Create account</Link></p>
                 </Trans>
                 <Trans {...fadeIn(3, 2000)} >
-                    <LoginForm {...dummyData}/>
+                    <LoginForm />
                 </Trans>
             </FormContainer>
             <PlantImg src={require('../images/desktop-bg.png')} />

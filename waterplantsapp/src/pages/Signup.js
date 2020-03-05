@@ -62,13 +62,6 @@ const fadeIn = (n) => {
     }
 }
 
-const dummyData = {
-    firstName: "tom",
-    lastName: "nguyen",
-    username: "tom27",
-    phoneNumber: "123-123-1234",
-    password: "Crappypw@123",
-}
 
 const Signup = () => {
     return (
@@ -81,7 +74,7 @@ const Signup = () => {
                     <p>Already have an account? <Link to="/login">Log in</Link></p>
                 </Trans>
                 <Trans {...fadeIn(3)} >
-                    <SignupForm {...dummyData} />
+                    <SignupForm />
                 </Trans>
             </FormContainer>
             <PlantImg src={require('../images/desktop-bg.png')} />
