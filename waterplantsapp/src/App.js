@@ -1,7 +1,7 @@
 import React from 'react';
-import { Route } from "react-router-dom";
 import './App.css';
 import styled from "styled-components";
+import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom'
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Header from "./components/Header";
@@ -18,11 +18,11 @@ const Container = styled.div`
 `
 function App() {
   return (
-    <Container>
+    <Router>
       <Header />
       <Route path="/login" component={Login} />
       <Route path="/signup" component={Signup} />
-    </Container>
+    </Router>
   );
 }
 

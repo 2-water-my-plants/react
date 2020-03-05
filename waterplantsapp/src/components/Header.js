@@ -1,20 +1,21 @@
 import React from 'react';
 import styled from 'styled-components';
+import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom'
 
 const HeaderContainer = styled.div`
     background: #2F4F2A;
     height: 6rem;
     display: flex;
-    align-items:center;
+    align-items: center;
     justify-content: flex-end;
-    div {
+    .header-title {
         display: flex;
         align-items:center;
-        justify-content: flex-end;
+        justify-content: flex-left;
+        padding-left: 1%;
         @media (min-width: 800px) {
             margin: 0 auto;
-            width: 800px;
-            
+            width: 95%;
         }
         h1 {
             font-family: Pacifico;
@@ -25,6 +26,7 @@ const HeaderContainer = styled.div`
 
         }
     }
+
 
 `
 
@@ -42,13 +44,20 @@ const Logo = styled.span`
     }
 `
 
+const StyleLink = styled.link`
+    color: white;
+    `
+
 const Header = () => {
     return (
         <HeaderContainer>
-            <div>
+            <div className='header-title'>
                 <Logo><img src={require("../images/wmp-logo.png")} /></Logo>
                 <h1>Water My Plants</h1>
             </div>
+            <div></div>
+                <Link style={{ textDecoration: 'none', color: 'white', width: '200px' }} to="/login">Login</Link>
+                <Link style={{ textDecoration: 'none', color: 'white', width: '200px'}} to="/signup">Sign Up</Link>
         </HeaderContainer>    
     )
 }
