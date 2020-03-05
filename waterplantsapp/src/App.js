@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom'
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Header from "./components/Header";
+import Home from "./pages/Home"
 
 
 const Container = styled.div`
@@ -48,6 +49,7 @@ function App() {
   return (
     <Router>
       <Header />
+      <Route exact path='/' component={Home}/>
       <Route path="/login" render={props => <Login  userData={userData} setUserData={setUserData} />} />
       <Route path="/signup" component={Signup} />
     </Router>
