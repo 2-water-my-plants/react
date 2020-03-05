@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { withFormik, Form, Field } from 'formik';
 import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 import axios from "axios";
 import * as yup from 'yup';
 import styled from 'styled-components';
+import { axiosWithAuth } from '../authorization/axiosWithAuth.js';
 
 const Container = styled.div`
 
@@ -11,18 +11,22 @@ const Container = styled.div`
         @media (min-width: 1000px) {
             width: 500px;
         }
-        label {
-            display: flex;
-            flex-direction: column;
-            width: 80%;
-            margin: 0 auto;
-            font-size: 1.8rem;
-            font-weight: 500;
+        margin: 0 auto;
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        border: 1.5px solid black;
+        padding-top: 25px;
+        border-radius: 25px;
+        box-shadow: 0px 0px 10px;
+        margin-right: 30px;
+        
             
             input {
                 margin-bottom: 3rem;
                 font-size: 1.8rem;
                 padding: 0.5rem 0.2rem;
+                
             }
         }
         button {
@@ -67,73 +71,52 @@ const slideIn = () => {
 }
 
 
-const LoginForm = (props) => {
-
-    const [error, setError] = useState()
-    const [users, setUsers] = useState()
-    useEffect(() => {
-        if (!props.isValid) {
-            const validationError = props.errors[Object.keys(props.errors)[0]];
-            validationError && setError(validationError)
-        }
-
-        if (props.status) {
-            if (props.status.errno) {
-
-            } else {
-                props.setUserData(props.status)
-                setUsers(props.status)
-                setError(undefined)
-            }
-
-        }
-    }, [props.isSubmitting, props.status])
-
-    return (
+const Login = (props) => {
+    const [credentials, setCredentials] = useState({});
+   
+     const login = e => {
+       e.preventDefault();
+       axiosWithAuth().post('https://water-myplants-2.herokuapp.com/api/login', credentials)
+         .then(res => {
+             console.log("Login successful ", res.data.payload);
+           localStorage.setItem('token', res.data.payload);
+           props.history.push('/');
+         })
+     }
+   
+     const handleChange = e => {
+         setCredentials({
+           ...credentials,
+           [e.target.name]: e.target.value,
+         })
+     }
+   
+       return (
         <Container>
-            {error && <h2>{error}</h2>}
-
-            <Form>
-                <label>
-                    Username
-                    <Field type="text" name="username" />
-                </label>
-                <label>
-                    Password
-                    <Field type="password" name="password" />
-                </label>
-                <Trans {...slideIn(0)}>
-                    <button type="submit">Log in</button>
-                    <p>Forgot your username/password?</p>
-                </Trans>
-            </Form>
-        </Container>
-    )
-    
-}
-
-export default withFormik({
-    mapPropsToValues: ({ username, password, }) => {
-        return {
-            username: username || "",
-            password: password || ""
-        }
-    },
-    validationSchema: yup.object().shape({
-        username: yup.string().required("Please enter your username"),
-        password: yup.string().required("Please enter a password").matches(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/, { message: "Password needs a minimum eight characters, at least one letter, one number and one special character " })
-    }),
-    handleSubmit: (values, { setStatus, resetForm }) => {
-        axios
-            .post("https://water-myplants-2.herokuapp.com/api/auth/login", values)
-            .then(response => {
-                console.log(response.data)
-                setStatus(response.data)
-                resetForm()
-            })
-            .catch(err => {
-                setStatus(err.response.data)
-                console.log(err.response)
-            })
-    }
-})(LoginForm);
+         <div>
+           <form onSubmit={login}>
+             <h3>Username:</h3>
+             <input
+               type="text"
+               name="username"
+               value={credentials.username}
+               onChange={handleChange}
+               placeholder="username" 
+             />
+             <br/>
+             <h3>Password:</h3>
+             <input
+               type="password"
+               name="password"
+               value={credentials.password}
+               onChange={handleChange}
+               placeholder="password" 
+             />
+             <button>Log in</button>
+           </form>
+         </div>
+         </Container>
+       )
+   }
+   
+   export default Login;

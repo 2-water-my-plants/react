@@ -75,7 +75,7 @@ const Login = (props) => {
                     <h1>Login in to your Account</h1>
                 </Trans>
                 <Trans {...fadeIn(2, 1500)} >
-                    <p>Don't have an account? <Link to="/signup">Create account</Link></p>
+                    <p style={{textAlign: 'center' }}>Don't have an account? <Link to="/signup">Create account</Link></p>
                 </Trans>
                 <Trans {...fadeIn(3, 2000)} >
                     <LoginForm {...props} />
