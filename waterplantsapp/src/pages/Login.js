@@ -67,7 +67,7 @@ const fadeIn = (n, timeoutLength) => {
 
 
 
-const Login = () => {
+const Login = (props) => {
     return (
         <Container>
             <FormContainer>
@@ -78,7 +78,7 @@ const Login = () => {
                     <p>Don't have an account? <Link to="/signup">Create account</Link></p>
                 </Trans>
                 <Trans {...fadeIn(3, 2000)} >
-                    <LoginForm />
+                    <LoginForm {...props} />
                 </Trans>
             </FormContainer>
             <PlantImg src={require('../images/desktop-bg.png')} />

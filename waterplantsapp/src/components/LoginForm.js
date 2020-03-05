@@ -81,6 +81,7 @@ const LoginForm = (props) => {
             if (props.status.errno) {
 
             } else {
+                props.setUserData(props.status)
                 setUsers(props.status)
                 setError(undefined)
             }
@@ -112,7 +113,7 @@ const LoginForm = (props) => {
 }
 
 export default withFormik({
-    mapPropsToValues: ({ username, password}) => {
+    mapPropsToValues: ({ username, password, }) => {
         return {
             username: username || "",
             password: password || ""

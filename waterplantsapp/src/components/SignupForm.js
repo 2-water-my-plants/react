@@ -5,7 +5,6 @@ import axios from "axios";
 import * as yup from 'yup';
 import styled from 'styled-components';
 
-
 const Container = styled.div`
 
     form {
@@ -109,11 +108,11 @@ const SingupForm = (props) => {
                 </label>
                 <label>
                     Phone Number
-                    <Field 
-                    type="tel" 
-                    name="phoneNumber"
-                    pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
-                    placeholder="xxx-xxx-xxxx"
+                    <Field
+                        type="tel"
+                        name="phoneNumber"
+                        pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+                        placeholder="xxx-xxx-xxxx"
                     />
                 </label>
                 <label>
@@ -150,6 +149,7 @@ export default withFormik({
         axios
             .post("https://water-myplants-2.herokuapp.com/api/auth/register", values)
             .then(response => {
+                console.log(response)
                 setStatus(response.data)
                 resetForm()
             })

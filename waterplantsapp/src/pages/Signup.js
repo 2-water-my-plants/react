@@ -63,7 +63,7 @@ const fadeIn = (n) => {
 }
 
 
-const Signup = () => {
+const Signup = (props) => {
     return (
         <Container>
             <FormContainer>
@@ -74,7 +74,7 @@ const Signup = () => {
                     <p>Already have an account? <Link to="/login">Log in</Link></p>
                 </Trans>
                 <Trans {...fadeIn(3)} >
-                    <SignupForm />
+                    <SignupForm {...props} />
                 </Trans>
             </FormContainer>
             <PlantImg src={require('../images/desktop-bg.png')} />
