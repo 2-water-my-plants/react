@@ -6,6 +6,10 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Header from "./components/Header";
 import Home from "./pages/Home"
+import PrivateRoute from "./authorization/PrivateRoute.js"
+import Plants from "./components/Plants.js"
+import UpdatePlant from './components/UpdatePlant';
+import CreatePlant from "./components/CreatePlant"
 
 
 const Container = styled.div`
@@ -43,15 +47,15 @@ function useLocalStorage(key, initialValue) {
 }
 
 function App() {
-  const [ userData, setUserData ] = useLocalStorage("userData", undefined);
-  console.log(userData)
 
   return (
     <Router>
       <Header />
-      <Route exact path='/' component={Home}/>
-      <Route path="/login" render={props => <Login  userData={userData} setUserData={setUserData} />} />
+      <Route path="/login" component={Login} />
       <Route path="/signup" component={Signup} />
+      <PrivateRoute path='/plants' component={Plants} />
+      <PrivateRoute path='/newplant' component={CreatePlant} />
+      <PrivateRoute path='/updateplant' component={UpdatePlant} />
     </Router>
   );
 }

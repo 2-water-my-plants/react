@@ -72,7 +72,7 @@ const Login = (props) => {
         <Container>
             <FormContainer>
                 <Trans {...fadeIn(1, 1000)} >
-                    <h1>Login in to your Account</h1>
+                    <h1 style={{textAlign: 'center'}}>Login in to your Account</h1>
                 </Trans>
                 <Trans {...fadeIn(2, 1500)} >
                     <p style={{textAlign: 'center' }}>Don't have an account? <Link to="/signup">Create account</Link></p>

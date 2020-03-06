@@ -76,7 +76,7 @@ const Login = (props) => {
    
      const login = e => {
        e.preventDefault();
-       axiosWithAuth().post('https://water-myplants-2.herokuapp.com/api/login', credentials)
+       axiosWithAuth().post('https://water-myplants-2.herokuapp.com/api/auth/login', credentials)
          .then(res => {
              console.log("Login successful ", res.data.payload);
            localStorage.setItem('token', res.data.payload);

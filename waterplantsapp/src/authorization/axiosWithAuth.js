@@ -13,7 +13,7 @@ export const axiosWithAuth =(props) => {
     }
 
     return axios.create({
-        baseURL: "http://localhost:5000",
+        baseURL: "http://localhost:3000",
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `${token}`,

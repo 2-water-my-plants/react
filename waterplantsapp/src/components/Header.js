@@ -52,10 +52,11 @@ const Header = () => {
     return (
         <HeaderContainer>
             <div className='header-title'>
-                <Logo><img src={require("../images/wmp-logo.png")} /></Logo>
+                <Logo to='/'><img src={require("../images/wmp-logo.png")}/></Logo>
                 <h1>Water My Plants</h1>
             </div>
             <div></div>
+            <Link style={{ textDecoration: 'none', color: 'white', width: '200px'}} to="/plants">Plants</Link>
                 <Link style={{ textDecoration: 'none', color: 'white', width: '200px' }} to="/login">Login</Link>
                 <Link style={{ textDecoration: 'none', color: 'white', width: '200px'}} to="/signup">Sign Up</Link>
         </HeaderContainer>    
