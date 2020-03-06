@@ -35,7 +35,7 @@ useEffect(() => {
             <label>Name: </label>
           <input
             type="text"
-            name="plant"
+            name="name"
             value={plant.name}
             onChange={handleChange}
           />
