@@ -41,7 +41,7 @@ const SubmitButton = styled.button`
 
 const UpdatePlant = (props) => {
     console.log(props.location);
- const [plant, setPlant] = useState({name: "", species: "", h20frequency: ""});
+ const [plant, setPlant] = useState({nickName: "", species: "", h2oFrequency: "", image: ""});
 
   useEffect(() => {
       setPlant(props.location.updateProps);
@@ -53,9 +53,9 @@ const UpdatePlant = (props) => {
     
     console.log("Updating plant with ID " + plant.id + " with data ", JSON.stringify(plant));
 
-    axiosWithAuth()//can't get this to not error with 404 
-        .put("https://water-myplants-2.herokuapp.com/api/plants:" + plant.id, JSON.stringify(plant))
-        .then(res => { alert("Sucessfully Updated Friend"); props.history.push('/') })
+    axiosWithAuth()
+        .put(`https://water-myplants-2.herokuapp.com/api/plants/:id` + plant.id,  JSON.stringify(plant))
+        .then(res => { alert("Sucessfully Updated Friend"); props.history.push(`/`) })
         .catch(err => console.log(err));
   }
 
@@ -72,8 +72,8 @@ const UpdatePlant = (props) => {
           <label>Name </label>
         <input
           type="text"
-          name="name"
-          value={plant.name}
+          name="nickName"
+          value={plant.nickName}
           onChange={handleChange}
         />
         <label>Species </label>
@@ -85,9 +85,16 @@ const UpdatePlant = (props) => {
         />
         <label>H20Frequency </label>
         <input
-          type="number"
-          name="h20frequency"
-          value={plant.h2ofrequency}
+          type="text"
+          name="h2oFrequency"
+          value={plant.h2oFrequency}
+          onChange={handleChange}
+        />
+          <label>Image </label>
+        <input
+          type="text"
+          name="image"
+          value={plant.image}
           onChange={handleChange}
         />
         <SubmitButton>Update plant</SubmitButton>

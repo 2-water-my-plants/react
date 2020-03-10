@@ -17,14 +17,17 @@ function Plant(props) {
             .catch(err => alert("Error Deleting Plant"))
             .finally(() => window.location.reload()/*reload page*/)
     }
+    
 
     return (
     <div style={{display: 'flex', justifyContent: 'center'}}>
         <div style={{padding: '20px 30px', width: '200px', marginBottom: '20px', border: '1.5px solid black',borderRadius: '25px', boxShadow: '0px 0px 10px'}}>
-            <h3>{plant.name}</h3>
-            <p style={{fontWeight: 'bold'}}>{plant.id}</p>
+            <h3>{plant.nickName}</h3>
+            <p style={{fontWeight: 'bold'}}>Species: {plant.species}</p>
+            <p style={{fontWeight: 'bold'}}>h20Frequency: {plant.h2oFrequency} times a day</p>
+            <img  style={{width:"175px", display: "flex", justifyContent: "center", paddingBottom: "20px"}}src={plant.image}/>
             <button style={{border: 'none', fontSize: '15px', marginRight: '10px'}}onClick={unplant}>Delete Plant</button>
-            <Link style={{textDecoration: 'none', color: 'black'}} to={{pathname:"/updateplant", updateProps: {...plant}}}>Update Plant</Link>
+            <Link style={{textDecoration: 'none', color: 'black', marginTop: "20px"}} to={{pathname:"/updateplant", updateProps: {...plant}}}>Update Plant</Link>
         </div>
     </div>
     );

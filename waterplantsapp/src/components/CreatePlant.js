@@ -57,7 +57,7 @@ const CreatePlant = (props) => {
   }
 
   return (
-    <Form onSubmit={create}>
+    <Form onSubmit={handleChange}>
       <h2>Create your plant!</h2>
       <label>Name </label>
       <input
