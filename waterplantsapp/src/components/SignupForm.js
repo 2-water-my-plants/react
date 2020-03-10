@@ -4,6 +4,7 @@ import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 import axios from "axios";
 import * as yup from 'yup';
 import styled from 'styled-components';
+import { useHistory} from "react-router-dom";
 
 const Container = styled.div`
 
@@ -11,11 +12,7 @@ const Container = styled.div`
         @media (min-width: 1000px) {
             width: 500px;
         }
-        border: 1.5px solid black;
         padding-top: 25px;
-        border-radius: 25px;
-        box-shadow: 0px 0px 5px;
-        margin-right: 30px;
         label {
             display: flex;
             flex-direction: column;
@@ -75,8 +72,9 @@ const slideIn = () => {
 
 const SingupForm = (props) => {
 
+    let history = useHistory();
+
     const [error, setError] = useState()
-    const [users, setUsers] = useState()
 
     useEffect(() => {
 
@@ -89,7 +87,7 @@ const SingupForm = (props) => {
             if (props.status.errno) {
                 props.status.errno === 19 && setError("This username has already been taken")
             } else {
-                setUsers(props.status)
+                history.push("/login")
                 setError(undefined)
             }
         }
