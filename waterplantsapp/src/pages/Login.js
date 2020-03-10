@@ -67,7 +67,7 @@ const fadeIn = (n, timeoutLength) => {
 
 
 
-const Login = (props) => {
+const Login = ({ setToken }) => {
     return (
         <Container>
             <FormContainer>
@@ -78,7 +78,7 @@ const Login = (props) => {
                     <p style={{textAlign: 'center' }}>Don't have an account? <Link to="/signup">Create account</Link></p>
                 </Trans>
                 <Trans {...fadeIn(3, 2000)} >
-                    <LoginForm {...props} />
+                    <LoginForm setToken={setToken}/>
                 </Trans>
             </FormContainer>
             <PlantImg src={require('../images/desktop-bg.png')} />

@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-export const axiosWithAuth =(props) => {
-    const token = localStorage.getItem('token');
+export const axiosWithAuth =() => {
+    const token = window.localStorage.getItem('token');
 
     if(token === "undefined") {
         console.log("NOT LOGGED IN");

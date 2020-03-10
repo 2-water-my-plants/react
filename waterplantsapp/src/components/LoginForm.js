@@ -4,29 +4,24 @@ import axios from "axios";
 import * as yup from 'yup';
 import styled from 'styled-components';
 import { axiosWithAuth } from '../authorization/axiosWithAuth.js';
-
+import { useHistory } from "react-router-dom"
 const Container = styled.div`
-
-    form {
+   form {
         @media (min-width: 1000px) {
             width: 500px;
         }
-        margin: 0 auto;
-        align-items: center;
-        display: flex;
-        flex-direction: column;
-        border: 1.5px solid black;
-        padding-top: 25px;
-        border-radius: 25px;
-        box-shadow: 0px 0px 5px;
-        margin-right: 30px;
-        
+        label {
+            display: flex;
+            flex-direction: column;
+            width: 80%;
+            margin: 0 auto;
+            font-size: 1.8rem;
+            font-weight: 500;
             
             input {
                 margin-bottom: 3rem;
                 font-size: 1.8rem;
                 padding: 0.5rem 0.2rem;
-                
             }
         }
         button {
@@ -60,63 +55,67 @@ const Container = styled.div`
 const Trans = ReactCSSTransitionGroup;
 
 const slideIn = () => {
-    return {
-        transitionName: `slideIn`,
-        transitionEnterTimeout: 0,
-        transitionAppear: true,
-        transitionAppearTimeout: 0,
-        transitionLeave: true,
-        transitionLeaveTimeout: 500
-    }
+  return {
+    transitionName: `slideIn`,
+    transitionEnterTimeout: 0,
+    transitionAppear: true,
+    transitionAppearTimeout: 0,
+    transitionLeave: true,
+    transitionLeaveTimeout: 500
+  }
 }
 
 
-const Login = (props) => {
-    const [credentials, setCredentials] = useState({});
-   
-     const login = e => {
-       e.preventDefault();
-       axiosWithAuth().post('https://water-myplants-2.herokuapp.com/api/auth/login', credentials)
-         .then(res => {
-             console.log("Login successful ", res.data.payload);
-           localStorage.setItem('token', res.data.payload);
-           props.history.push('/');
-         })
-     }
-   
-     const handleChange = e => {
-         setCredentials({
-           ...credentials,
-           [e.target.name]: e.target.value,
-         })
-     }
-   
-       return (
-        <Container>
-         <div>
-           <form onSubmit={login}>
-             <h3>Username:</h3>
-             <input
-               type="text"
-               name="username"
-               value={credentials.username}
-               onChange={handleChange}
-               placeholder="username" 
-             />
-             <br/>
-             <h3>Password:</h3>
-             <input
-               type="password"
-               name="password"
-               value={credentials.password}
-               onChange={handleChange}
-               placeholder="password" 
-             />
-             <button>Log in</button>
-           </form>
-         </div>
-         </Container>
-       )
-   }
-   
-   export default Login;
+const Login = ({ setToken }) => {
+  const [credentials, setCredentials] = useState({ username: "", password: ""});
+  const [ error, setError ] = useState()
+  const history = useHistory()
+  const login = e => {
+    e.preventDefault();
+    axiosWithAuth().post('https://water-myplants-2.herokuapp.com/api/auth/login', credentials)
+      .then(res => {
+        window.localStorage.setItem('token', res.data.token);
+        history.push('/plants');
+        setToken(res.data.token)
+      })
+      .catch((err) => {
+        console.log("error")
+        setError("Invalid user credentials")
+      })
+  }
+
+  const handleChange = e => {
+    setCredentials({
+      ...credentials,
+      [e.target.name]: e.target.value,
+    })
+  }
+  return (
+    <Container>
+      <h2>{error && error}</h2>
+      <form onSubmit={e => login(e)}>
+        <label>Username
+        <input
+            type="text"
+            name="username"
+            value={credentials.username}
+            onChange={e => handleChange(e)}
+          />
+        </label>
+        <label>Password
+        <input
+            type="password"
+            name="password"
+            value={credentials.password}
+            onChange={e => handleChange(e)}
+          />
+        </label>
+        <Trans {...slideIn(0)}>
+          <button>Log in</button>
+        </Trans>
+      </form>
+    </Container>
+  )
+}
+
+export default Login;
