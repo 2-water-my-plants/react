@@ -28,7 +28,7 @@ function App() {
     window.localStorage.setItem("token", undefined)
   }
   return (
-    <Router>
+    <div>
       <Header token={token} removeTokenFromLocal={removeTokenFromLocal}/>
       <Route exact path="/" component={Home}/>
       <Route path="/login" render={() => <Login setToken={setToken} />} />
@@ -36,7 +36,7 @@ function App() {
       <PrivateRoute path='/plants' component={Plants} />
       <PrivateRoute path='/newplant' component={CreatePlant} />
       <PrivateRoute path='/updateplant' component={UpdatePlant} />
-    </Router>
+    </div>
   )
 }
 
