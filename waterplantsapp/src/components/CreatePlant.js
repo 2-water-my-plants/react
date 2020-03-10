@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { axiosWithAuth } from '../authorization/axiosWithAuth.js';
 import styled from "styled-components";
 
-const Form = styled.div`
+const Form = styled.form`
   display: flex;
   flex-direction: column;
   width: 800px;
@@ -39,13 +39,13 @@ const SubmitButton = styled.button`
 `
 
 const CreatePlant = (props) => {
-  const [plant, setPlant] = useState({ name: "", species: "", h20frequency: "" });
+  const [plant, setPlant] = useState({ nickName: "", species: "", h2oFrequency: "", image: "" });
 
   const create = e => {
     e.preventDefault();
     axiosWithAuth()
-      .post("https://water-myplants-2.herokuapp.com/api/plants", plant)
-      .then(res => props.history.push('/'))
+      .post("https://water-myplants-2.herokuapp.com/api/auth/myplants", plant)
+      .then(res => props.history.push('/plants'))
       .catch(err => console.log(err));
   }
 
@@ -55,15 +55,15 @@ const CreatePlant = (props) => {
       [e.target.name]: e.target.value,
     })
   }
-
+  console.log(plant)
   return (
-    <Form onSubmit={handleChange}>
+    <Form onSubmit={e => create(e)}>
       <h2>Create your plant!</h2>
       <label>Name </label>
       <input
         type="text"
-        name="name"
-        value={plant.name}
+        name="nickName"
+        value={plant.nickName}
         onChange={handleChange}
       />
       <label>Species </label>
@@ -76,8 +76,15 @@ const CreatePlant = (props) => {
       <label>H20frequency </label>
       <input
         type="number"
-        name="h20frequency"
-        value={plant.h20frequency}
+        name="h2oFrequency"
+        value={plant.h2oFrequency}
+        onChange={handleChange}
+      />
+      <label>Image </label>
+      <input
+        type="text"
+        name="image"
+        value={plant.image}
         onChange={handleChange}
       />
       <SubmitButton>Create Plant</SubmitButton>

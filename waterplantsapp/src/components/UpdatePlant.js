@@ -3,7 +3,7 @@ import { withRouter } from 'react-router';
 import { axiosWithAuth } from '../authorization/axiosWithAuth.js';
 import styled from "styled-components";
 
-const Form = styled.div`
+const Form = styled.form`
   display: flex;
   flex-direction: column;
   width: 800px;
@@ -40,10 +40,12 @@ const SubmitButton = styled.button`
 `
 
 const UpdatePlant = (props) => {
-    console.log(props.location);
+
  const [plant, setPlant] = useState({nickName: "", species: "", h2oFrequency: "", image: ""});
 
   useEffect(() => {
+
+      console.log("updatePlants",props.location.updateProps)
       setPlant(props.location.updateProps);
   }, [props.location.updateProps])
 
@@ -54,8 +56,8 @@ const UpdatePlant = (props) => {
     console.log("Updating plant with ID " + plant.id + " with data ", JSON.stringify(plant));
 
     axiosWithAuth()
-        .put(`https://water-myplants-2.herokuapp.com/api/plants/:id` + plant.id,  JSON.stringify(plant))
-        .then(res => { alert("Sucessfully Updated Friend"); props.history.push(`/`) })
+        .put(`https://water-myplants-2.herokuapp.com/api/plants/` + plant.id,  JSON.stringify(plant))
+        .then(res => { alert("Sucessfully Updated Friend"); props.history.push(`/plants`) })
         .catch(err => console.log(err));
   }
 
@@ -67,7 +69,7 @@ const UpdatePlant = (props) => {
   }
 
     return (
-      <Form onSubmit={update}>
+      <Form onSubmit={(e) => update(e)}>
         <h2>Update your plant!</h2>
           <label>Name </label>
         <input
